@@ -213,7 +213,7 @@ const Download = () => {
                         </div>
                       </TooltipTrigger>
                       <TooltipContent className="max-w-sm">
-                        <p>On Windows, right-click and select "Run as administrator". On macOS, you may need to go to System Preferences > Security & Privacy to allow the installation.</p>
+                        <p>On Windows, right-click and select "Run as administrator". On macOS, you may need to go to System Preferences &gt; Security &amp; Privacy to allow the installation.</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
