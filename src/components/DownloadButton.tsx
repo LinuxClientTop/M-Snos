@@ -26,42 +26,55 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   const handleDownload = () => {
     setIsDownloading(true);
     
-    // If we have a direct download URL, use it
+    // Если у нас есть URL для прямого скачивания, используем его
     if (downloadUrl) {
-      // Create an anchor element and trigger download
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.click();
-      
-      // Simulate download complete
-      setTimeout(() => {
-        setIsDownloading(false);
-        setIsDownloaded(true);
+      try {
+        // Создаем элемент ссылки и инициируем скачивание
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         
-        toast({
-          title: 'Download Started',
-          description: `MSNOS ${label || `v${version}`} is being downloaded. Thank you!`,
-        });
-        
-        // Reset button after a delay
+        // Симулируем завершение скачивания
         setTimeout(() => {
-          setIsDownloaded(false);
-        }, 3000);
-      }, 1500);
+          setIsDownloading(false);
+          setIsDownloaded(true);
+          
+          toast({
+            title: 'Скачивание начато',
+            description: `MSNOS ${label || `v${version}`} скачивается. Спасибо!`,
+          });
+          
+          // Сбрасываем состояние кнопки через некоторое время
+          setTimeout(() => {
+            setIsDownloaded(false);
+          }, 3000);
+        }, 1500);
+      } catch (error) {
+        console.error('Ошибка при скачивании:', error);
+        setIsDownloading(false);
+        
+        toast({
+          title: 'Ошибка скачивания',
+          description: 'Произошла ошибка при попытке скачать файл.',
+          variant: 'destructive',
+        });
+      }
     } else {
-      // Fallback to simulate download if no URL provided
+      // Запасной вариант, если URL не предоставлен
       setTimeout(() => {
         setIsDownloading(false);
         setIsDownloaded(true);
         
         toast({
-          title: 'Download Started',
-          description: `MSNOS v${version} is being downloaded. Thank you!`,
+          title: 'Скачивание начато',
+          description: `MSNOS v${version} скачивается. Спасибо!`,
         });
         
-        // Reset button after a delay
+        // Сбрасываем состояние кнопки через некоторое время
         setTimeout(() => {
           setIsDownloaded(false);
         }, 3000);
@@ -79,17 +92,17 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
       {isDownloading ? (
         <>
           <div className="h-5 w-5 animate-spin rounded-full border-2 border-t-transparent border-white mr-2"></div>
-          Downloading...
+          Скачивание...
         </>
       ) : isDownloaded ? (
         <>
           <Check className="mr-2 h-5 w-5" />
-          Downloaded
+          Скачано
         </>
       ) : (
         <>
           <Download className="mr-2 h-5 w-5" />
-          {label || `Download MSNOS v${version} (${size})`}
+          {label || `Скачать MSNOS v${version} (${size})`}
         </>
       )}
     </Button>
