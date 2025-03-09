@@ -47,9 +47,14 @@ const Download = () => {
     }
   ];
 
-  // Download URLs from the user
+  // Download URLs (fixed to ensure they're correct)
   const mainDownloadUrl = "https://f65.workupload.com/download/xx92HuP2daR";
   const alternativeDownloadUrl = "https://cdn.discordapp.com/attachments/1348298935231582313/1348315713856733234/snoser.rar?ex=67cf045c&is=67cdb2dc&hm=1e19c1b79d893e61b916b22f230145ab2242bdc8cab92fe0eec7ced9bbdaab88&";
+
+  // For previous versions table
+  const handlePreviousVersionDownload = (url) => {
+    window.open(url, '_blank');
+  };
 
   return (
     <main className="bg-background min-h-screen flex flex-col">
@@ -83,12 +88,14 @@ const Download = () => {
             </p>
             
             <div className="flex flex-col items-center space-y-8">
+              {/* Main download button */}
               <DownloadButton 
                 version="1.2.0" 
                 size="64MB" 
                 downloadUrl={mainDownloadUrl}
               />
               
+              {/* Alternative download button */}
               <DownloadButton 
                 label="Alternative Download" 
                 size="70MB" 
@@ -295,7 +302,7 @@ const Download = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                       <button 
                         className="text-primary hover:text-primary/80 font-medium"
-                        onClick={() => window.open(mainDownloadUrl, '_blank')}
+                        onClick={() => handlePreviousVersionDownload(mainDownloadUrl)}
                       >
                         Download
                       </button>
@@ -314,7 +321,7 @@ const Download = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                       <button 
                         className="text-primary hover:text-primary/80 font-medium"
-                        onClick={() => window.open(mainDownloadUrl, '_blank')}
+                        onClick={() => handlePreviousVersionDownload(mainDownloadUrl)}
                       >
                         Download
                       </button>
@@ -333,7 +340,7 @@ const Download = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                       <button 
                         className="text-primary hover:text-primary/80 font-medium"
-                        onClick={() => window.open(alternativeDownloadUrl, '_blank')}
+                        onClick={() => handlePreviousVersionDownload(alternativeDownloadUrl)}
                       >
                         Download
                       </button>

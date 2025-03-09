@@ -29,11 +29,17 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
     // Если у нас есть URL для прямого скачивания, используем его
     if (downloadUrl) {
       try {
+        console.log('Starting download from URL:', downloadUrl);
+        
         // Создаем элемент ссылки и инициируем скачивание
         const link = document.createElement('a');
         link.href = downloadUrl;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
+        
+        // Use download attribute for direct download (when possible)
+        // link.download = `MSNOS-${version || '1.0.0'}.rar`;
+        
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -65,6 +71,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
       }
     } else {
       // Запасной вариант, если URL не предоставлен
+      console.warn('No download URL provided, using fallback');
       setTimeout(() => {
         setIsDownloading(false);
         setIsDownloaded(true);
