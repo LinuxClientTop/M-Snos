@@ -8,12 +8,16 @@ interface DownloadButtonProps {
   version?: string;
   size?: string;
   className?: string;
+  downloadUrl?: string;
+  label?: string;
 }
 
 const DownloadButton: React.FC<DownloadButtonProps> = ({
   version = '1.0.0',
   size = '64MB',
   className,
+  downloadUrl,
+  label,
 }) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
@@ -22,21 +26,47 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   const handleDownload = () => {
     setIsDownloading(true);
     
-    // Simulate download
-    setTimeout(() => {
-      setIsDownloading(false);
-      setIsDownloaded(true);
+    // If we have a direct download URL, use it
+    if (downloadUrl) {
+      // Create an anchor element and trigger download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.click();
       
-      toast({
-        title: 'Download Started',
-        description: `MSNOS v${version} is being downloaded. Thank you!`,
-      });
-      
-      // Reset button after a delay
+      // Simulate download complete
       setTimeout(() => {
-        setIsDownloaded(false);
-      }, 3000);
-    }, 1500);
+        setIsDownloading(false);
+        setIsDownloaded(true);
+        
+        toast({
+          title: 'Download Started',
+          description: `MSNOS ${label || `v${version}`} is being downloaded. Thank you!`,
+        });
+        
+        // Reset button after a delay
+        setTimeout(() => {
+          setIsDownloaded(false);
+        }, 3000);
+      }, 1500);
+    } else {
+      // Fallback to simulate download if no URL provided
+      setTimeout(() => {
+        setIsDownloading(false);
+        setIsDownloaded(true);
+        
+        toast({
+          title: 'Download Started',
+          description: `MSNOS v${version} is being downloaded. Thank you!`,
+        });
+        
+        // Reset button after a delay
+        setTimeout(() => {
+          setIsDownloaded(false);
+        }, 3000);
+      }, 1500);
+    }
   };
 
   return (
@@ -59,7 +89,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
       ) : (
         <>
           <Download className="mr-2 h-5 w-5" />
-          Download MSNOS v{version} ({size})
+          {label || `Download MSNOS v${version} (${size})`}
         </>
       )}
     </Button>

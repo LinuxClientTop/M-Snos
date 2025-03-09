@@ -47,6 +47,10 @@ const Download = () => {
     }
   ];
 
+  // Download URLs from the user
+  const mainDownloadUrl = "https://f65.workupload.com/download/xx92HuP2daR";
+  const alternativeDownloadUrl = "https://cdn.discordapp.com/attachments/1348298935231582313/1348315713856733234/snoser.rar?ex=67cf045c&is=67cdb2dc&hm=1e19c1b79d893e61b916b22f230145ab2242bdc8cab92fe0eec7ced9bbdaab88&";
+
   return (
     <main className="bg-background min-h-screen flex flex-col">
       <Navbar />
@@ -79,7 +83,18 @@ const Download = () => {
             </p>
             
             <div className="flex flex-col items-center space-y-8">
-              <DownloadButton version="1.2.0" size="64MB" />
+              <DownloadButton 
+                version="1.2.0" 
+                size="64MB" 
+                downloadUrl={mainDownloadUrl}
+              />
+              
+              <DownloadButton 
+                label="Alternative Download" 
+                size="70MB" 
+                downloadUrl={alternativeDownloadUrl}
+                className="bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              />
               
               <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-muted-foreground">
                 <span className="flex items-center">
@@ -278,7 +293,10 @@ const Download = () => {
                       60 MB
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                      <button className="text-primary hover:text-primary/80 font-medium">
+                      <button 
+                        className="text-primary hover:text-primary/80 font-medium"
+                        onClick={() => window.open(mainDownloadUrl, '_blank')}
+                      >
                         Download
                       </button>
                     </td>
@@ -294,7 +312,10 @@ const Download = () => {
                       58 MB
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                      <button className="text-primary hover:text-primary/80 font-medium">
+                      <button 
+                        className="text-primary hover:text-primary/80 font-medium"
+                        onClick={() => window.open(mainDownloadUrl, '_blank')}
+                      >
                         Download
                       </button>
                     </td>
@@ -310,7 +331,10 @@ const Download = () => {
                       55 MB
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                      <button className="text-primary hover:text-primary/80 font-medium">
+                      <button 
+                        className="text-primary hover:text-primary/80 font-medium"
+                        onClick={() => window.open(alternativeDownloadUrl, '_blank')}
+                      >
                         Download
                       </button>
                     </td>
